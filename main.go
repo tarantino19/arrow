@@ -9,6 +9,11 @@ import (
 	"github.com/anthropics/anthropic-sdk-go"
 )
 
+type Agent struct {
+	client         *anthropic.Client
+	getUserMessage func() (string, bool)
+}
+
 func main() {
 	client := anthropic.NewClient()
 
@@ -32,11 +37,6 @@ func NewAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *A
 		client:         client,
 		getUserMessage: getUserMessage,
 	}
-}
-
-type Agent struct {
-	client         *anthropic.Client
-	getUserMessage func() (string, bool)
 }
 
 func (a *Agent) Run(ctx context.Context) error {
